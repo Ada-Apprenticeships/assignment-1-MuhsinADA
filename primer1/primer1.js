@@ -11,6 +11,16 @@ const validScaleEntries = {
     kelvin: ["K", "k"]
 };
 
+// Direct conversions for each possible conversion pair
+const directConversions = {
+    "C_to_F": (celsius) => (celsius * 9/5) + conversionConstants.fConst,
+    "C_to_K": (celsius) => celsius + conversionConstants.kConst,
+    "F_to_C": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9,
+    "F_to_K": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9 + conversionConstants.kConst,
+    "K_to_C": (kelvin) => kelvin - conversionConstants.kConst,
+    "K_to_F": (kelvin) => (kelvin - conversionConstants.kConst) * 9/5 + conversionConstants.fConst
+};
+
 // Error check for valid temperature inputs
 const validateTemperature = (temperature) => {
     if (temperature === null || temperature === undefined || isNaN(temperature)) {
@@ -24,16 +34,6 @@ const validateAndStandardiseScale = (scale) => {
     if (validScaleEntries.fahrenheit.includes(scale)) return "F";
     if (validScaleEntries.kelvin.includes(scale)) return "K";
     throw new Error("Invalid temperature scale. Use C, F, or K");
-};
-
-// Direct conversions for each possible conversion pair
-const directConversions = {
-    "C_to_F": (celsius) => (celsius * 9/5) + conversionConstants.fConst,
-    "C_to_K": (celsius) => celsius + conversionConstants.kConst,
-    "F_to_C": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9,
-    "F_to_K": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9 + conversionConstants.kConst,
-    "K_to_C": (kelvin) => kelvin - conversionConstants.kConst,
-    "K_to_F": (kelvin) => (kelvin - conversionConstants.kConst) * 9/5 + conversionConstants.fConst
 };
 
 // Gets the appropriate conversion function for the given scales
