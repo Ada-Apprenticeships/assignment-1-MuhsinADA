@@ -19,7 +19,7 @@ const validateTemperature = (temperature) => {
 };
 
 // Standardises the scales to Uppercase
-const validateAndNormaliseScale = (scale) => {
+const validateAndStandardiseScale = (scale) => {
     if (validScaleEntries.celsius.includes(scale)) return "C";
     if (validScaleEntries.fahrenheit.includes(scale)) return "F";
     if (validScaleEntries.kelvin.includes(scale)) return "K";
@@ -28,12 +28,12 @@ const validateAndNormaliseScale = (scale) => {
 
 // Direct conversions for each possible conversion pair
 const directConversions = {
-    "C_TO_F": (celsius) => (celsius * 9/5) + conversionConstants.fConst,
-    "C_TO_K": (celsius) => celsius + conversionConstants.kConst,
-    "F_TO_C": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9,
-    "F_TO_K": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9 + conversionConstants.kConst,
-    "K_TO_C": (kelvin) => kelvin - conversionConstants.kConst,
-    "K_TO_F": (kelvin) => (kelvin - conversionConstants.kConst) * 9/5 + conversionConstants.fConst
+    "C_to_F": (celsius) => (celsius * 9/5) + conversionConstants.fConst,
+    "C_to_K": (celsius) => celsius + conversionConstants.kConst,
+    "F_to_C": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9,
+    "F_to_K": (fahrenheit) => (fahrenheit - conversionConstants.fConst) * 5/9 + conversionConstants.kConst,
+    "K_to_C": (kelvin) => kelvin - conversionConstants.kConst,
+    "K_to_F": (kelvin) => (kelvin - conversionConstants.kConst) * 9/5 + conversionConstants.fConst
 };
 
 // Gets the appropriate conversion function for the given scales
@@ -42,7 +42,7 @@ const getConversionFunction = (fromScale, toScale) => {
         return (temp) => temp;  // No conversion needed
     }
     
-    const conversionKey = `${fromScale}_TO_${toScale}`;
+    const conversionKey = `${fromScale}_to_${toScale}`;
     return directConversions[conversionKey];
 };
 
@@ -50,11 +50,11 @@ const getConversionFunction = (fromScale, toScale) => {
 const temperatureConversion = (temperature, fromScale, toScale) => {
     // Input validation
     validateTemperature(temperature);
-    const normalisedFromScale = validateAndNormaliseScale(fromScale);
-    const normalisedToScale = validateAndNormaliseScale(toScale);
+    const standardisedFromScale = validateAndStandardiseScale(fromScale);
+    const standardisedToScale = validateAndStandardiseScale(toScale);
     
     // Get and apply the appropriate conversion function
-    const convertFunction = getConversionFunction(normalisedFromScale, normalisedToScale);
+    const convertFunction = getConversionFunction(standardisedFromScale, standardisedToScale);
     const result = convertFunction(temperature);
     
     // Round to 4 decimal places for consistency
