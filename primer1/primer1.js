@@ -21,10 +21,12 @@ const directConversions = {
   "K_to_F": (kelvin) => (kelvin - conversionConstants.kConst) * 9/5 + conversionConstants.fConst
 };
 
-// Error check for valid temperature inputs
-const validateTemperature = (temperature) => {
+// Error check for valid temperature inputs and standardising temperature to float type
+const validateAndStandardiseTemperature = (temperature) => {
   if (temperature === null || temperature === undefined || isNaN(temperature)) {
     throw new Error("Temperature must be a valid numeric value");
+  } else {
+    return Number(temperature)
   }
 };
 
@@ -49,13 +51,13 @@ const getConversionFunction = (fromScale, toScale) => {
 // Main function body running all the above helper functions
 const temperatureConversion = (temperature, fromScale, toScale) => {
   // Input validation
-  validateTemperature(temperature);
+  const standardisedTemperature = validateAndStandardiseTemperature(temperature);
   const standardisedFromScale = validateAndStandardiseScale(fromScale);
   const standardisedToScale = validateAndStandardiseScale(toScale);
   
   // Get and apply the appropriate conversion function
   const convertFunction = getConversionFunction(standardisedFromScale, standardisedToScale);
-  const result = convertFunction(temperature);
+  const result = convertFunction(standardisedTemperature);
   
   // Round to 4 decimal places for consistency
   return Number(result.toFixed(4));
