@@ -3,7 +3,7 @@ const SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const RANKS = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King'];
 
 // Validates the number of decks and then creates the deck
-function createAndValidatesDeck(numberOfDecks = 1) {
+function createAndValidateDeck(numberOfDecks = 1) {
   if (!Number.isInteger(numberOfDecks) || numberOfDecks < 1) {
     throw new Error('Number of decks must be a positive integer');
   }
@@ -37,7 +37,7 @@ function validateDealParameters(numberOfPlayers, cardsPerPlayer, totalCards) {
 // Shuffles and deals a specific number of cards to a specific number of players based on a specifc number of decks 
 function shuffleAndDeal(numberOfPlayers, cardsPerPlayer, numberOfDecks = 1) {
   // Create and validate deck
-  const deck = createAndValidatesDeck(numberOfDecks);
+  const deck = createAndValidateDeck(numberOfDecks);
   validateDealParameters(numberOfPlayers, cardsPerPlayer, deck.length);
   
   // An implementation of the Fisher-Yates shuffle
